@@ -1,0 +1,17 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+zoomus = "==1.1.1"
+requests = "==2.23.0"
+pandas = "==1.0.3"
+matplotlib = "*"
+python-dateutil = "==2.8.1"
+plotly = "*"
+
+[requires]
+python_version = "3.7"
