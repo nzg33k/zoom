@@ -5,6 +5,8 @@ import sys
 import time
 import pandas
 import matplotlib
+# psutil isn't used directly but it is required for plotly so I am adding it to help build reqs
+import psutil
 # Things break if you import the whole module and use relative delta, its a known upstream bug
 # Also, the package is called python-dateutil not dateutil which the inspector doesn't like
 # noinspection PyPackageRequirements
@@ -99,7 +101,7 @@ def plot_graph(x_data, y_data, y_label='Y', x_label='X', title='Title', filename
     if graph_engine == 'matplotlib':
         matplot_plot_graph(x_data, y_data, y_label, x_label, title, filename)
     else:
-        matplot_plot_graph(x_data, y_data, y_label, x_label, title, filename)
+        plotly_plot_graph(x_data, y_data, y_label, x_label, title, filename)
     html_create_html_redirect(graph_engine)
 
 

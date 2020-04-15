@@ -4,7 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/zoomvenv" />
     </content>
-    <orderEntry type="jdk" jdkName="Pipenv (swar051)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Pipenv (zoom)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="R User Library" level="project" />
     <orderEntry type="library" name="R Skeletons" level="application" />
@@ -13,5 +13,6 @@
     <option name="versionSpecifier" value="Don't specify version" />
     <option name="removeUnused" value="true" />
     <option name="modifyBaseFiles" value="true" />
+    <option name="keepMatchingSpecifier" value="false" />
   </component>
 </module>
