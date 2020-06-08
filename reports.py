@@ -5,7 +5,7 @@ import sys
 import time
 import pandas
 import matplotlib
-# psutil isn't used directly but it is required for plotly so I am adding it to help build reqs
+# psutil isn't used directly but it is required for plotly so I am adding it to help build requirements
 import psutil
 # Things break if you import the whole module and use relative delta, its a known upstream bug
 # Also, the package is called python-dateutil not dateutil which the inspector doesn't like
@@ -42,7 +42,7 @@ def initial_daily_report_run():
     year = current_date.year
     month = current_date.month
     month = month - 5
-    if month < 0:
+    if month <= 0:
         month += 12
         year -= 1
     for i in range(6):
