@@ -234,7 +234,10 @@ def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=30
     return webinar_data
 
 
-data = initial_daily_report_run()
-rearranged_data = rearrange_data(data)
-create_graphs(rearranged_data)
-export_csv(data)
+def update_reporting():
+    data = initial_daily_report_run()
+    rearranged_data = rearrange_data(data)
+    create_graphs(rearranged_data)
+    export_csv(data)
+
+update_reporting()
