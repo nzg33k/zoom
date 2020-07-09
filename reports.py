@@ -199,7 +199,7 @@ def datetime_to_string(source_date):
     return new_date
 
 
-def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=300):
+def get_webinars(from_date, to_date=None, webinar_type='past', page_size=300):
     """Get stats around webinars"""
     if to_date is None:
         to_date = from_date + rd.relativedelta(months=1)
@@ -220,6 +220,11 @@ def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=30
         time.sleep(60)
         results = gr('/metrics/webinars', params)
         webinars = json.loads(results.content)
+    return webinars
+
+
+def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=300):
+    webinars = get_webinars(from_date, to_date, webinar_type, page_size)
     webinars = webinars['webinars']
     webinar_data = {}
     for webinar in webinars:
@@ -239,5 +244,6 @@ def update_reporting():
     rearranged_data = rearrange_data(data)
     create_graphs(rearranged_data)
     export_csv(data)
+
 
 update_reporting()
