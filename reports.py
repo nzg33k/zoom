@@ -169,16 +169,30 @@ def create_graphs(graph_data):
                'webinar_participants')
 
 
-def export_csv(csv_data):
+def export_csv(csv_data, csv_filename='output/daily.csv', fieldnames=False):
     """Export data to a csv file"""
-    if sys.version_info[0] >= 3:
-        csv_file = open('output/daily.csv', 'w', newline='')
-    else:
-        csv_file = open('output/daily.csv', 'w')
-    with csv_file:
+    if not fieldnames:
         fieldnames = ['date', 'new_users', 'meetings', 'participants', 'meeting_minutes',
                       'total_webinar_participants', 'webinars']
+    if sys.version_info[0] >= 3:
+        csv_file = open(csv_filename, 'w', newline='')
+    else:
+        csv_file = open(csv_filename, 'w')
+    with csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(csv_data)
+
+
+def list_of_dict_to_csv(csv_data, csv_filename='output/LOfD.csv'):
+    """Export a list of dictionaries to a csv file"""
+    keys = set().union(*(dictionary.keys() for dictionary in csv_data))
+    if sys.version_info[0] >= 3:
+        csv_file = open(csv_filename, 'w', newline='', encoding="utf-8")
+    else:
+        csv_file = open(csv_filename, 'w', encoding="utf-8")
+    with csv_file:
+        writer = csv.DictWriter(csv_file, keys)
         writer.writeheader()
         writer.writerows(csv_data)
 
@@ -223,6 +237,37 @@ def get_webinars(from_date, to_date=None, webinar_type='past', page_size=300):
     return webinars
 
 
+def get_meetings(from_date, to_date=None, meeting_type='past', page_size=300):
+    """Get stats around meetings"""
+    if to_date is None:
+        to_date = from_date + rd.relativedelta(months=1)
+    from_date = datetime_to_string(from_date)
+    to_date = datetime_to_string(to_date)
+    params = {
+        'type': meeting_type,
+        'page_size': page_size,
+        'from': from_date,
+        'to': to_date,
+        'next_page_token': "first_run"
+    }
+    all_meetings = []
+    while params['next_page_token'] != "":
+        if params['next_page_token'] == "first_run":
+            params['next_page_token'] = ""
+        results = gr('/metrics/meetings', params)
+        meetings = json.loads(results.content)
+        if 'meetings' not in meetings:
+            # Can only query so many times a minute
+            sys.stdout.write('Querying faster than Zoom let us, sleeping for one minute.\n')
+            sys.stdout.flush()
+            time.sleep(60)
+            results = gr('/metrics/meetings', params)
+            meetings = json.loads(results.content)
+        params['next_page_token'] = meetings['next_page_token']
+        all_meetings += meetings['meetings']
+    return all_meetings
+
+
 def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=300):
     webinars = get_webinars(from_date, to_date, webinar_type, page_size)
     webinars = webinars['webinars']
@@ -239,11 +284,14 @@ def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=30
     return webinar_data
 
 
-def update_reporting():
+def update_reporting(meetings=False):
     data = initial_daily_report_run()
     rearranged_data = rearrange_data(data)
     create_graphs(rearranged_data)
     export_csv(data)
+    if meetings:
+        meeting_data = get_meetings(datetime.datetime.now() - rd.relativedelta(months=1))
+        list_of_dict_to_csv(meeting_data, "output/meeting_list_data.csv")
 
 
 update_reporting()
