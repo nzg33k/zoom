@@ -13,6 +13,7 @@ matplotlib = "*"
 python-dateutil = "==2.8.1"
 plotly = "*"
 psutil = "*"
+boto3 = "*"
 
 [requires]
 python_version = "3.7"

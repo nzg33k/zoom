@@ -5,6 +5,9 @@ import sys
 import time
 import pandas
 import matplotlib
+from BitsNPieces import bucket
+import secrets
+
 # psutil isn't used directly but it is required for plotly so I am adding it to help build requirements
 import psutil
 # Things break if you import the whole module and use relative delta, its a known upstream bug
@@ -284,14 +287,30 @@ def get_webinar_stats(from_date, to_date=None, webinar_type='past', page_size=30
     return webinar_data
 
 
+def put_output_in_bucket():
+    bucket.put_file_in_bucket("output/meeting_list_data.csv",
+                              "ZoomMeetingDetails/" + str(datetime.datetime.today()) + ".csv",
+                              "ZoomDaily",
+                              secrets.s3_bucket,
+                              secrets.s3_bucket_access_key,
+                              secrets.s3_bucket_secret_key)
+    bucket.put_file_in_bucket("output/daily.csv",
+                              "ZoomUsage/" + str(datetime.datetime.today()) + ".csv",
+                              "ZoomUsage",
+                              secrets.s3_bucket,
+                              secrets.s3_bucket_access_key,
+                              secrets.s3_bucket_secret_key)
+
+
 def update_reporting(meetings=False):
     data = initial_daily_report_run()
     rearranged_data = rearrange_data(data)
     create_graphs(rearranged_data)
     export_csv(data)
     if meetings:
-        meeting_data = get_meetings(datetime.datetime.now() - rd.relativedelta(months=1))
+        meeting_data = get_meetings(datetime.datetime.now() - rd.relativedelta(days=1))
         list_of_dict_to_csv(meeting_data, "output/meeting_list_data.csv")
+    put_output_in_bucket()
 
 
-update_reporting()
+update_reporting(True)
