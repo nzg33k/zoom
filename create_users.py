@@ -35,7 +35,6 @@ def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=
             print(create_result.content)
         for add_to_group_result in add_to_group_results:
             print(add_to_group_result.content)
-        for change_type_result in change_type_results:
-            print(change_type_result)
+        print(change_type_results)
 
 
