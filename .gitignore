@@ -2,11 +2,19 @@
 ### Example user template template
 ### Example user template
 
-# IntelliJ project files
-secrets.py
-*.csv
+# This file stops certain files from being published in git
+
+# Ignore generated files
 *.png
 *.html
+
+# Do not ignore these two specific html files
 !output/plotly.html
 !output/matplotlib.html
+
+# Ignore data files
 /userlist
+*.csv
+
+# Ignore secrets
+secrets.py
