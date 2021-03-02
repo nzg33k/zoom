@@ -63,7 +63,7 @@ def add_users_to_group(group_name, users_list):
     return result
 
 
-def get_user_email_list_from_file(file_name, param_format = True):
+def get_user_email_list_from_file(file_name, param_format=True):
     """Get the list of members from a list"""
     user_list = []
     list_file = open(file_name)
@@ -89,9 +89,17 @@ def chunks(big_list, n=30):
 def add_users_to_group_from_email_list_file(group_name, file_name):
     """Add users to a group from an e-mail list file"""
     big_user_list = get_user_email_list_from_file(file_name)
-    list_of_lists =chunks(big_user_list, 30)
+    list_of_lists = chunks(big_user_list, 30)
     results = []
     for small_user_list in list_of_lists:
         results.append(add_users_to_group(group_name, small_user_list))
     return results
 
+
+def get_group_member_addresses(group_name):
+    """Get a list of e-mail addresses from a group"""
+    group_members = get_group_members(group_name)
+    members = []
+    for member in group_members:
+        members.append(member['email'])
+    return members

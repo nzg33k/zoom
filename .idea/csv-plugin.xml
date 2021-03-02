@@ -17,6 +17,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\license_groups.py">
+          <value>
+            <Attribute>
+              <option name="separator" value=":" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\secrets.py">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\zoom_groups.py">
           <value>
             <Attribute>
