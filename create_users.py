@@ -24,17 +24,21 @@ def create_users(users_list_file, user_type=2):
     return results
 
 
-def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=False):
+def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=False, even_new=True):
     if file_name is None:
         file_name = group_name + ".csv"
-    create_results = create_users(file_name, user_type)
+    if even_new:
+        create_results = create_users(file_name, user_type)
     add_to_group_results = zoom_groups.add_users_to_group_from_email_list_file(group_name, file_name)
     change_type_results = zoom_groups.change_user_type_for_group(group_name, user_type)
     if debug:
-        for create_result in create_results:
-            print(create_result.content)
+        if even_new:
+            # noinspection PyUnboundLocalVariable
+            for create_result in create_results:
+                print(create_result.content)
         for add_to_group_result in add_to_group_results:
             print(add_to_group_result.content)
         print(change_type_results)
+
 
 # add_users_to_groups_even_new('Group Name', debug=True)
