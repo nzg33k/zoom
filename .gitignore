@@ -18,3 +18,4 @@
 
 # Ignore secrets
 secrets.py
+/my_new_users.py
