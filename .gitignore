@@ -15,7 +15,7 @@
 # Ignore data files
 /userlist
 *.csv
+/csvs/*
 
 # Ignore secrets
 secrets.py
-/my_new_users.py
