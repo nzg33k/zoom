@@ -26,7 +26,7 @@ def create_users(users_list_file, user_type=2):
 
 def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=False, even_new=True):
     if file_name is None:
-        file_name = group_name + ".csv"
+        file_name = f"csvs/{group_name}.csv"
     if even_new:
         create_results = create_users(file_name, user_type)
     add_to_group_results = zoom_groups.add_users_to_group_from_email_list_file(group_name, file_name)
