@@ -5,22 +5,29 @@ from generic_request import generic_zoom_request as gr
 from zoom_groups import get_user_email_list_from_file
 import zoom_groups
 
+def create_user(user_email, user_type=2):
+    """Add a single user to a group"""
+    params = {
+        'action': "create",
+        'user_info': {
+            'email': user_email,
+            'type': user_type
+        }
+    }
+    params = json.dumps(params)
+    result = gr('users/', params=params, request_type='post')
+    return result
+
 
 def create_users(users_list_file, user_type=2):
     """Add a user or users to a group"""
-    user_list = get_user_email_list_from_file(users_list_file, False)
+    if isinstance(users_list_file, list):
+        user_list = users_list_file
+    else:
+        user_list = get_user_email_list_from_file(users_list_file, False)
     results = []
     for user_email in user_list:
-        params = {
-            'action': "create",
-            'user_info': {
-                'email': user_email,
-                'type': user_type
-            }
-        }
-        params = json.dumps(params)
-        result = gr('users/', params=params, request_type='post')
-        results.append(result)
+        results.append(create_user(user_email, user_type))
     return results
 
 

@@ -66,7 +66,10 @@ def add_users_to_group(group_name, users_list):
 def get_user_email_list_from_file(file_name, param_format=True):
     """Get the list of members from a list"""
     user_list = []
-    list_file = open(file_name)
+    if isinstance(file_name, str):
+        list_file = open(file_name)
+    else:
+        list_file = file_name
     for line in list_file:
         if param_format:
             user_list.append(
@@ -76,7 +79,8 @@ def get_user_email_list_from_file(file_name, param_format=True):
             )
         else:
             user_list.append(line.rstrip())
-    list_file.close()
+    if isinstance(file_name, str):
+        list_file.close()
     return user_list
 
 
