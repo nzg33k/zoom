@@ -1,6 +1,6 @@
 # noinspection PyPackageRequirements
 from zoomus import ZoomClient
-import .secrets
+from .secrets import API_SECRET, API_KEY
 # noinspection PyPackageRequirements
 import requests
 
@@ -9,7 +9,7 @@ def generic_zoom_request(request="report/daily", params=None, request_type='get'
     """Perform an unlisted request on zoom"""
 
     # noinspection PyUnresolvedReferences,PyUnresolvedReferences
-    client = ZoomClient(secrets.API_KEY, secrets.API_SECRET)
+    client = ZoomClient(API_KEY, API_SECRET)
     if params is None:
         params = {}
     headers = {
