@@ -1,6 +1,6 @@
 import json
 # noinspection PyUnresolvedReferences
-from generic_request import generic_zoom_request as gr
+from .generic_request import generic_zoom_request as gr
 
 
 def get_group_id(group_name):

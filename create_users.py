@@ -1,9 +1,12 @@
 import json
 # noinspection PyUnresolvedReferences
-from generic_request import generic_zoom_request as gr
+from . import zoom_groups
+from .generic_request import generic_zoom_request as gr
 # noinspection PyUnresolvedReferences
-from zoom_groups import get_user_email_list_from_file
-import zoom_groups
+from .zoom_groups import get_user_email_list_from_file
+
+
+# import zoom_groups
 
 def create_user(user_email, user_type=2):
     """Add a single user to a group"""
@@ -87,6 +90,6 @@ def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=
         if change_type_results:
             output += "User type(s) were successfully updated\n"
 
-        print(output)
+        return output
 
 # add_users_to_groups_even_new('Group Name', debug=True)
