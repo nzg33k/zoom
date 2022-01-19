@@ -1,6 +1,6 @@
 # noinspection PyPackageRequirements
 from zoomus import ZoomClient
-import secrets
+import .secrets
 # noinspection PyPackageRequirements
 import requests
 
