@@ -1,9 +1,9 @@
 import json
 # noinspection PyUnresolvedReferences
-from . import zoom_groups
 from .generic_request import generic_zoom_request as gr
 # noinspection PyUnresolvedReferences
-from .zoom_groups import get_user_email_list_from_file
+from .zoom_groups import get_user_email_list_from_file, add_users_to_group_from_email_list_file
+from .zoom_groups import change_user_type_for_group
 
 
 # import zoom_groups
@@ -39,8 +39,8 @@ def add_users_to_groups_even_new(group_name, file_name=None, user_type=2, debug=
         file_name = f"csvs/{group_name}.csv"
     if even_new:
         create_results = create_users(file_name, user_type)
-    add_to_group_results = zoom_groups.add_users_to_group_from_email_list_file(group_name, file_name)
-    change_type_results = zoom_groups.change_user_type_for_group(group_name, user_type)
+    add_to_group_results = add_users_to_group_from_email_list_file(group_name, file_name)
+    change_type_results = change_user_type_for_group(group_name, user_type)
     if debug:
         already_exist = []
         created = []
